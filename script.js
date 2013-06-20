@@ -16,6 +16,49 @@
  * up(). down(), left(). right()
  * Catches keyboard events and calls the move module */
 
+function watchKeys() {
+  function key(event) {
+    var event = event || window.event;
+
+    switch (event.keyCode) {
+      case 37:
+        key.left();
+        break;
+      case 39:
+        key.right();
+        break;
+      case 38:
+        key.up();
+        break;
+      case 40:
+        key.down();
+        break;
+    }
+  }
+
+  key.up = function() {
+    console.log('key up pressed');
+  };
+
+  key.down = function() {
+    console.log('key down pressed');
+  };
+
+  key.left = function() {
+    console.log('key left pressed');
+  };
+
+  key.right = function() {
+    console.log('key right pressed');
+  };
+
+  return key;
+}
+
+
+document.onkeydown = watchKeys();
+
+
 /* 2) module move
  * up(), down(), left(), right()
  * Moves the last piece in the field by generating newCoords, then checks
