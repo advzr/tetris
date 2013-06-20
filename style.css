@@ -1,0 +1,49 @@
+body {
+  background: black;
+}
+
+#field {
+  border: 1px solid green;
+  height: 23em;
+  margin: 0 auto;
+  position: relative;
+  width: 10em;
+}
+
+.cube {
+  border: 1px solid green;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  display: block;
+  height: 1em;
+  position: absolute;
+  width: 1em;
+}
+
+.I-piece {
+  background: cyan;
+}
+
+.J-piece {
+  background: blue;
+}
+
+.L-piece {
+  background: orange;
+}
+
+.O-piece {
+  background: yellow;
+}
+
+.S-piece {
+  background: green;
+}
+
+.T-piece {
+  background: purple;
+}
+
+.Z-piece {
+  background: red;
+}
