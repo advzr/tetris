@@ -1,6 +1,7 @@
 'use strict';
 // init section
 var draw = drawGame();
+var move = makeMoves();
 
 /* state object
  * state.pieces - all pieces that are already on the bottom
@@ -56,19 +57,19 @@ function watchKeys() {
   }
 
   key.up = function() {
-    console.log('key up pressed');
+    move.up();
   };
 
   key.down = function() {
-    console.log('key down pressed');
+    move.down();
   };
 
   key.left = function() {
-    console.log('key left pressed');
+    move.left();
   };
 
   key.right = function() {
-    console.log('key right pressed');
+    move.right();
   };
 
   return key;
@@ -84,6 +85,70 @@ document.onkeydown = watchKeys();
  * newCoords with the check function. If the check function returns true,
  * replaces currentCoords with newCoords and calls the drawGame function. */
 
+
+
+function makeMoves() {
+  var moves = {};
+  moves.left = left;
+  moves.right = right;
+  moves.up = up;
+  moves.down = down;
+
+  return moves;
+
+
+  function left() {
+    var currentCoords = state.currentPiece.coords;
+    var newCoords = getNewCoordinateSystem();
+
+    for (var i = 0; i < currentCoords.length; i++) {
+      for (var j = 0; j < currentCoords[i].length; j++) {
+        if (!currentCoords[i][j]) continue;
+
+        var newY = i;
+        var newX = j - 1;
+
+        if (!checkCoordinates(newY, newX)) {
+          return false;
+        }
+
+        newCoords[newY][newX] = true;
+      }
+    }
+
+    state.currentPiece.coords = newCoords;
+    draw.currentPiece();
+    return true;
+  }
+
+
+  function right() {
+    console.log('move right');
+  }
+
+
+  function up() {
+    console.log('move up');
+  }
+
+
+  function down() {
+    console.log('move down');
+  }
+
+
+  function checkCoordinates(y, x) {
+    if (x < 0 || y < 0 || x > 9 || y > 22) {
+      return false;
+    }
+
+    if (state.occupiedField[y][x]) {
+      return false;
+    }
+
+    return true;
+  }
+}
 /* 3) function check(coords)
  * Returns true if coords are within field and are not occupied by
  * other pieces */
