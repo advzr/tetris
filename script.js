@@ -305,7 +305,18 @@ function timeTick() {
 
 
   function updateOccupiedField() {
-    //console.log('updating field');
+    var pieces = state.pieces;
+    var last = pieces.length - 1;
+    var piece = pieces[last];
+    var coords = piece.coords;
+
+    for (var i = 0; i < coords.length; i++) {
+      for (var j = 0; j < coords[i].length; j++) {
+        if (!coords[i][j]) continue;
+
+        state.occupiedField[i][j] = true;
+      }
+    }
   }
 
 
