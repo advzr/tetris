@@ -1,4 +1,6 @@
 'use strict';
+// init section
+var draw = drawGame();
 
 /* state object
  * state.pieces - all pieces that are already on the bottom
@@ -98,6 +100,7 @@ document.onkeydown = watchKeys();
 // for development purposes to delete later
 getRandomPiece();
 getRandomPiece();
+getRandomPiece();
 //
 
 
@@ -109,6 +112,7 @@ function getRandomPiece() {
 
   if (state.currentPiece) {
     state.currentPiece.specialClass = 'current';
+    draw.currentPiece();
   }
 
   state.nextPiece = new Piece(pieceType[typeNumber]);
@@ -122,7 +126,7 @@ function getRandomPiece() {
     var max = 6;
 
     var randTypeNumber = min + Math.random() * (max + 1 - min);
-    randTypeNumber = randTypeNumber^0;
+    randTypeNumber = randTypeNumber ^ 0;
 
     return randTypeNumber;
   }
@@ -221,8 +225,54 @@ function Piece(type) {
  *  to animate a cleared line */
 
 function drawGame() {
-  removeAllChildren();
-  drawCurrentState();
+  //removeAllChildren();
+  //drawCurrentState();
+  var drawFunctions = {};
+  drawFunctions.currentPiece = currentPiece;
+
+  return drawFunctions;
+
+
+  function currentPiece() {
+    if (!state.currentPiece) return;
+
+    clearCurrentPiece();
+
+    drawPiece(state.currentPiece);
+
+
+    function clearCurrentPiece() {
+      var currentCubes = document.getElementsByClassName('current');
+
+      while (currentCubes.length) {
+        var last = currentCubes.length - 1;
+        currentCubes[last].parentNode.removeChild(currentCubes[last]);
+      }
+    }
+  }
+
+
+  function drawPiece(piece) {
+    var coords = piece.coords;
+    var fieldElem = document.getElementById('field');
+
+    for (var i = 0; i < coords.length; i++) {
+      for (var j = 0; j < coords[i].length; j++) {
+        if (!coords[i][j]) continue;
+
+        var cube = document.createElement('div');
+        cube.style.top = i + 'em';
+        cube.style.left = j + 'em';
+        addClass(cube, piece.className);
+
+        if (piece.specialClass) {
+          addClass(cube, piece.specialClass);
+        }
+
+        fieldElem.appendChild(cube);
+      }
+    }
+  }
 
 
   function removeAllChildren() {
