@@ -13,13 +13,16 @@ var move = makeMoves();
  * state.nextPiece - the next piece that will come after state.currentPiece
  * state.lines - a quantity of cleared lines
  * state.level - a difficulty level. The higher the level the more
- * frequently the timeTick function is called */
+ * frequently the timeTick function is called
+ * state.intervalId - id to clear setInterval */
 
 var state = {};
 state.pieces = [];
 state.occupiedField = getNewCoordinateSystem();
 state.lines = 0;
 state.level = 1;
+state.intervalId = setInterval(timeTick, 1000);
+
 
 
 function getNewCoordinateSystem() {
@@ -287,6 +290,28 @@ function makeMoves() {
  * Tries to call move.down(). If fails then pushes it into state.pieces,
  * updates state.occupiedField, calls the clearLine function and calls
  * the createRandomPiece function */
+
+
+function timeTick() {
+  if (move.down()) {
+    return;
+  }
+
+  state.pieces.push(state.currentPiece);
+  updateOccupiedField();
+  clearLine();
+  getRandomPiece();
+
+
+  function updateOccupiedField() {
+    console.log('updating field');
+  }
+
+
+  function clearLine() {
+    console.log('checking full lines, calling clear animation, shifting pieces');
+  }
+}
 
 /* 5) createRandomPiece function
  * Creates new random piece, puts it in window as a next piece,
