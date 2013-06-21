@@ -106,7 +106,13 @@ function getRandomPiece() {
   var pieceType = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
 
   state.currentPiece = state.nextPiece;
+
+  if (state.currentPiece) {
+    state.currentPiece.specialClass = 'current';
+  }
+
   state.nextPiece = new Piece(pieceType[typeNumber]);
+  state.nextPiece.specialClass = 'next';
 
   drawGame();
 
