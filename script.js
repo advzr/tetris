@@ -448,6 +448,7 @@ function drawGame() {
   function fixedPiece() {
     var pieces = state.pieces;
     var last = pieces.length - 1;
+    pieces[last].specialClass = '';
 
     drawPiece(pieces[last]);
   }
@@ -475,14 +476,11 @@ function drawGame() {
         var top = i;
         var left = j;
         addClass(cube, piece.className);
+        addClass(cube, piece.specialClass);
 
-        if (piece.specialClass) {
-          addClass(cube, piece.specialClass);
-
-          if (piece.specialClass == 'next') {
-            top += 4;
-            left += 9;
-          }
+        if (piece.specialClass == 'next') {
+          top += 4;
+          left += 9;
         }
 
         cube.style.top = top + 'em';
