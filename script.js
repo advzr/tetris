@@ -299,17 +299,18 @@ function timeTick() {
 
   state.pieces.push(state.currentPiece);
   updateOccupiedField();
+  draw.fixedPiece();
   clearLine();
   getRandomPiece();
 
 
   function updateOccupiedField() {
-    console.log('updating field');
+    //console.log('updating field');
   }
 
 
   function clearLine() {
-    console.log('checking full lines, calling clear animation, shifting pieces');
+    //console.log('checking full lines, calling clear animation, shifting pieces');
   }
 }
 
