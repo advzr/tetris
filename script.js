@@ -78,14 +78,97 @@ document.onkeydown = watchKeys();
  * Creates new random piece, puts it in window as a next piece,
  * takes the next piece out of that window and puts it in the array of pieces */
 
-/* 6) drawGame function
- * Draws all pieces on the field
- * there are subfunctions:
- *  to draw state.pieces
- *  to draw state.currentPiece
- *  to draw state.nextPiece
- *  to animate a cleared line */
+function Piece(type) {
+  // Possible type variants: I, J, L, O, S, T, Z
+  this.type = type;
+  this.className = type + '-piece';
+  this.className += ' cube';
 
-/* 7) clearLine function
- * Removes a full line consisting of state.pieces and unshifts their coordinates
- * filling them with an empty line */
+  var self = this;
+  createStartPosition();
+  createStartPivotPoint();
+
+
+  function createStartPosition() {
+    self.coords = getNewCoordinateSystem();
+
+    switch (type) {
+      case 'I':
+        self.coords[0][4] = true;
+        self.coords[1][4] = true;
+        self.coords[2][4] = true;
+        self.coords[3][4] = true;
+        break;
+      case 'J':
+        self.coords[0][4] = true;
+        self.coords[1][4] = true;
+        self.coords[2][4] = true;
+        self.coords[2][3] = true;
+        break;
+      case 'L':
+        self.coords[0][4] = true;
+        self.coords[1][4] = true;
+        self.coords[2][4] = true;
+        self.coords[2][5] = true;
+        break;
+      case 'O':
+        self.coords[0][4] = true;
+        self.coords[1][4] = true;
+        self.coords[0][3] = true;
+        self.coords[1][3] = true;
+        break;
+      case 'S':
+        self.coords[0][4] = true;
+        self.coords[0][5] = true;
+        self.coords[1][4] = true;
+        self.coords[1][3] = true;
+        break;
+      case 'T':
+        self.coords[0][4] = true;
+        self.coords[0][5] = true;
+        self.coords[0][3] = true;
+        self.coords[1][4] = true;
+        break;
+      case 'Z':
+        self.coords[0][4] = true;
+        self.coords[0][3] = true;
+        self.coords[1][4] = true;
+        self.coords[1][5] = true;
+        break;
+    }
+  }
+
+
+  function createStartPivotPoint() {
+    self.pivotPoint = {};
+
+    switch (type) {
+      case 'O':
+        break;
+      case 'I':
+        self.pivotPoint.y = 2;
+        self.pivotPoint.x = 3;
+        break;
+      case 'J':
+      case 'L':
+      case 'S':
+      case 'T':
+      case 'Z':
+        self.pivotPoint.y = 0;
+        self.pivotPoint.x = 4;
+        break;
+    }
+  }
+
+
+  /* 6) drawGame function
+   * Draws all pieces on the field
+   * there are subfunctions:
+   *  to draw state.pieces
+   *  to draw state.currentPiece
+   *  to draw state.nextPiece
+   *  to animate a cleared line */
+
+  /* 7) clearLine function
+   * Removes a full line consisting of state.pieces and unshifts their coordinates
+   * filling them with an empty line */
