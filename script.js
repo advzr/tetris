@@ -117,6 +117,7 @@ function makeMoves() {
     }
 
     state.currentPiece.coords = newCoords;
+    state.currentPiece.pivotPoint.x--;
     draw.currentPiece();
     return true;
   }
@@ -142,6 +143,7 @@ function makeMoves() {
     }
 
     state.currentPiece.coords = newCoords;
+    state.currentPiece.pivotPoint.x++;
     draw.currentPiece();
     return true;
   }
@@ -172,6 +174,7 @@ function makeMoves() {
     }
 
     state.currentPiece.coords = newCoords;
+    state.currentPiece.pivotPoint.y++;
     draw.currentPiece();
     return true;
 
