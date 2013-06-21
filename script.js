@@ -159,16 +159,82 @@ function Piece(type) {
         break;
     }
   }
+}
 
 
-  /* 6) drawGame function
-   * Draws all pieces on the field
-   * there are subfunctions:
-   *  to draw state.pieces
-   *  to draw state.currentPiece
-   *  to draw state.nextPiece
-   *  to animate a cleared line */
+/* 6) drawGame function
+ * Draws all pieces on the field
+ * there are subfunctions:
+ *  to draw state.pieces
+ *  to draw state.currentPiece
+ *  to draw state.nextPiece
+ *  to animate a cleared line */
 
-  /* 7) clearLine function
-   * Removes a full line consisting of state.pieces and unshifts their coordinates
-   * filling them with an empty line */
+function drawGame() {
+  removeAllChildren();
+  drawCurrentState();
+
+
+  function removeAllChildren() {
+    var fieldElem = document.getElementById('field');
+    while (fieldElem.lastChild) {
+      fieldElem.removeChild(fieldElem.lastChild);
+    }
+  }
+
+
+  function drawCurrentState() {
+    var pieces = state.pieces;
+    var fieldElem = document.getElementById('field');
+
+    for (var k = 0; k < pieces.length; k++) {
+      var piece = pieces[k];
+      var pieceCoords = piece.coords;
+
+      for (var i = 0; i < pieceCoords.length; i++) {
+        for (var j = 0; j < pieceCoords[i].length; j++) {
+          var cube = 0;
+          if (!pieceCoords[i][j]) continue;
+
+          cube = document.createElement('div');
+          cube.style.top = i + 'em';
+          cube.style.left = j + 'em';
+          addClass(cube, piece.className);
+
+          fieldElem.appendChild(cube);
+        }
+      }
+    }
+  }
+
+  function addClass(el, cls) {
+    var c = el.className ? el.className.split(' ') : [];
+    for (var i = 0; i < c.length; i++) {
+      if (c[i] == cls) return;
+    }
+    c.push(cls);
+    el.className = c.join(' ');
+  }
+
+
+  function removeClass(el, cls) {
+    var c = el.className.split(' ');
+    for (var i = 0; i < c.length; i++) {
+      if (c[i] == cls) c.splice(i--, 1);
+    }
+
+    el.className = c.join(' ');
+  }
+
+
+  function hasClass(el, cls) {
+    for (var c = el.className.split(' '), i = c.length - 1; i >= 0; i--) {
+      if (c[i] == cls) return true;
+    }
+    return false;
+  }
+}
+
+/* 7) clearLine function
+ * Removes a full line consisting of state.pieces and unshifts their coordinates
+ * filling them with an empty line */
