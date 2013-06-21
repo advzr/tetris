@@ -95,6 +95,33 @@ document.onkeydown = watchKeys();
  * Creates new random piece, puts it in window as a next piece,
  * takes the next piece out of that window and puts it in the array of pieces */
 
+// for development purposes to delete later
+getRandomPiece();
+getRandomPiece();
+//
+
+
+function getRandomPiece() {
+  var typeNumber = getRandomTypeNumber();
+  var pieceType = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+
+  state.currentPiece = state.nextPiece;
+  state.nextPiece = new Piece(pieceType[typeNumber]);
+
+  drawGame();
+
+
+  function getRandomTypeNumber() {
+    var min = 0;
+    var max = 6;
+
+    var randTypeNumber = min + Math.random() * (max + 1 - min);
+    randTypeNumber = randTypeNumber^0;
+
+    return randTypeNumber;
+  }
+}
+
 function Piece(type) {
   // Possible type variants: I, J, L, O, S, T, Z
   this.type = type;
