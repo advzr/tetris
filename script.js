@@ -117,8 +117,7 @@ function getRandomPiece() {
 
   state.nextPiece = new Piece(pieceType[typeNumber]);
   state.nextPiece.specialClass = 'next';
-
-  drawGame();
+  draw.nextPiece();
 
 
   function getRandomTypeNumber() {
@@ -229,6 +228,7 @@ function drawGame() {
   //drawCurrentState();
   var drawFunctions = {};
   drawFunctions.currentPiece = currentPiece;
+  drawFunctions.nextPiece = nextPiece;
 
   return drawFunctions;
 
@@ -237,8 +237,13 @@ function drawGame() {
     if (!state.currentPiece) return;
 
     clearPiece(state.currentPiece);
-
     drawPiece(state.currentPiece);
+  }
+
+
+  function nextPiece() {
+    clearPiece(state.nextPiece);
+    drawPiece(state.nextPiece);
   }
 
 
@@ -249,7 +254,6 @@ function drawGame() {
       var last = cubesToClear.length - 1;
       cubesToClear[last].parentNode.removeChild(cubesToClear[last]);
     }
-
   }
 
 
@@ -262,13 +266,21 @@ function drawGame() {
         if (!coords[i][j]) continue;
 
         var cube = document.createElement('div');
-        cube.style.top = i + 'em';
-        cube.style.left = j + 'em';
+        var top = i;
+        var left = j;
         addClass(cube, piece.className);
 
         if (piece.specialClass) {
           addClass(cube, piece.specialClass);
+
+          if (piece.specialClass == 'next') {
+            top += 4;
+            left += 9;
+          }
         }
+
+        cube.style.top = top + 'em';
+        cube.style.left = left + 'em';
 
         fieldElem.appendChild(cube);
       }
