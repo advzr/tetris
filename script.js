@@ -236,19 +236,20 @@ function drawGame() {
   function currentPiece() {
     if (!state.currentPiece) return;
 
-    clearCurrentPiece();
+    clearPiece(state.currentPiece);
 
     drawPiece(state.currentPiece);
+  }
 
 
-    function clearCurrentPiece() {
-      var currentCubes = document.getElementsByClassName('current');
+  function clearPiece(piece) {
+    var cubesToClear = document.getElementsByClassName(piece.specialClass);
 
-      while (currentCubes.length) {
-        var last = currentCubes.length - 1;
-        currentCubes[last].parentNode.removeChild(currentCubes[last]);
-      }
+    while (cubesToClear.length) {
+      var last = cubesToClear.length - 1;
+      cubesToClear[last].parentNode.removeChild(cubesToClear[last]);
     }
+
   }
 
 
