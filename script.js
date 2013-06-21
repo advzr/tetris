@@ -224,11 +224,11 @@ function Piece(type) {
  *  to animate a cleared line */
 
 function drawGame() {
-  //removeAllChildren();
-  //drawCurrentState();
   var drawFunctions = {};
+
   drawFunctions.currentPiece = currentPiece;
   drawFunctions.nextPiece = nextPiece;
+  drawFunctions.fixedPiece = fixedPiece;
 
   return drawFunctions;
 
@@ -244,6 +244,14 @@ function drawGame() {
   function nextPiece() {
     clearPiece(state.nextPiece);
     drawPiece(state.nextPiece);
+  }
+
+
+  function fixedPiece() {
+    var pieces = state.pieces;
+    var last = pieces.length - 1;
+
+    drawPiece(pieces[last]);
   }
 
 
