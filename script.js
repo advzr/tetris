@@ -144,7 +144,6 @@ function makeMoves() {
     state.currentPiece.coords = newCoords;
     draw.currentPiece();
     return true;
-
   }
 
 
@@ -154,7 +153,28 @@ function makeMoves() {
 
 
   function down() {
-    console.log('move down');
+    var currentCoords = state.currentPiece.coords;
+    var newCoords = getNewCoordinateSystem();
+
+    for (var i = 0; i < currentCoords.length; i++) {
+      for (var j = 0; j < currentCoords[i].length; j++) {
+        if (!currentCoords[i][j]) continue;
+
+        var newY = i + 1;
+        var newX = j;
+
+        if (!checkCoordinates(newY, newX)) {
+          return false;
+        }
+
+        newCoords[newY][newX] = true;
+      }
+    }
+
+    state.currentPiece.coords = newCoords;
+    draw.currentPiece();
+    return true;
+
   }
 
 
