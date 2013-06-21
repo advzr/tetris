@@ -123,7 +123,28 @@ function makeMoves() {
 
 
   function right() {
-    console.log('move right');
+    var currentCoords = state.currentPiece.coords;
+    var newCoords = getNewCoordinateSystem();
+
+    for (var i = 0; i < currentCoords.length; i++) {
+      for (var j = 0; j < currentCoords[i].length; j++) {
+        if (!currentCoords[i][j]) continue;
+
+        var newY = i;
+        var newX = j + 1;
+
+        if (!checkCoordinates(newY, newX)) {
+          return false;
+        }
+
+        newCoords[newY][newX] = true;
+      }
+    }
+
+    state.currentPiece.coords = newCoords;
+    draw.currentPiece();
+    return true;
+
   }
 
 
