@@ -150,7 +150,93 @@ function makeMoves() {
 
 
   function up() {
-    console.log('move up');
+    var currentPiece = state.currentPiece;
+    var currentCoords = currentPiece.coords;
+    var type = currentPiece.type;
+
+    switch (type) {
+      case 'O':
+        return true;
+      case 'J':
+      case 'L':
+      case 'T':
+        if (!rotateLeft()) {
+          return false;
+        }
+        break;
+      case 'I':
+      case 'S':
+      case 'Z':
+        if (!currentPiece.rotated) {
+          if (!rotateLeft()) {
+            return false;
+          }
+          currentPiece.rotated = true;
+        } else {
+          if (!rotateRight()) {
+            return false;
+          }
+          currentPiece.rotated = false;
+        }
+
+        break;
+    }
+
+    draw.currentPiece();
+    return true;
+
+
+    function rotateLeft() {
+      var newCoords = getNewCoordinateSystem();
+      var newX, newY;
+      var pivotPoint = currentPiece.pivotPoint;
+
+      for (var i = 0; i < currentCoords.length; i++) {
+        for (var j = 0; j < currentCoords[i].length; j++) {
+          if (!currentCoords[i][j]) continue;
+
+          newY = pivotPoint.y - pivotPoint.x + j;
+          newX = pivotPoint.y + pivotPoint.x - i;
+
+
+          if (!checkCoordinates(newY, newX)) {
+            return false;
+          }
+
+          newCoords[newY][newX] = true;
+        }
+      }
+
+      state.currentPiece.coords = newCoords;
+      return true;
+    }
+
+
+    function rotateRight() {
+      var newCoords = getNewCoordinateSystem();
+      var newX, newY;
+      var pivotPoint = currentPiece.pivotPoint;
+
+      for (var i = 0; i < currentCoords.length; i++) {
+        for (var j = 0; j < currentCoords[i].length; j++) {
+          if (!currentCoords[i][j]) continue;
+
+          newY = pivotPoint.x + pivotPoint.y - j;
+          newX = pivotPoint.x - pivotPoint.y + i;
+
+
+          if (!checkCoordinates(newY, newX)) {
+            return false;
+          }
+
+          newCoords[newY][newX] = true;
+        }
+      }
+
+      state.currentPiece.coords = newCoords;
+      return true;
+    }
+
   }
 
 
@@ -245,6 +331,7 @@ function Piece(type) {
   this.type = type;
   this.className = type + '-piece';
   this.className += ' cube';
+  this.rotated = false;
 
   var self = this;
   createStartPosition();
@@ -306,6 +393,8 @@ function Piece(type) {
 
     switch (type) {
       case 'O':
+        self.pivotPoint.y = 2;
+        self.pivotPoint.x = 3;
         break;
       case 'I':
         self.pivotPoint.y = 2;
