@@ -12,6 +12,23 @@
  * state.level - a difficulty level. The higher the level the more
  * frequently the timeTick function is called */
 
+var state = {};
+state.pieces = [];
+state.occupiedField = getNewCoordinateSystem();
+state.lines = 0;
+state.level = 1;
+
+
+function getNewCoordinateSystem() {
+  var coords = [];
+
+  for (var i = 0; i < 23; i++) {
+    coords.push(new Array(10));
+  }
+
+  return coords;
+}
+
 /* 1) module key
  * up(). down(), left(). right()
  * Catches keyboard events and calls the move module */
