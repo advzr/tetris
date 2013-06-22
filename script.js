@@ -29,7 +29,13 @@ function getNewCoordinateSystem() {
   var coords = [];
 
   for (var i = 0; i < 23; i++) {
-    coords.push(new Array(10));
+    var tmpArr = [];
+
+    for (var j = 0; j < 10; j++) {
+      tmpArr.push(false);
+    }
+
+    coords.push(tmpArr);
   }
 
   return coords;
@@ -321,7 +327,50 @@ function timeTick() {
 
 
   function clearLine() {
-    //console.log('checking full lines, calling clear animation, shifting pieces');
+    var occupiedField = state.occupiedField;
+    var fullLines = 0;
+
+    for (var i = 0; i < occupiedField.length; i++) {
+      if (occupiedField[i].every(isTrue)) {
+        clearLineInOccupiedField(i);
+        clearLineInFixedPieces(i);
+        fullLines++;
+      }
+    }
+
+    console.log(fullLines);
+
+
+    function isTrue(a) {
+      return !!a;
+    }
+
+
+    function clearLineInOccupiedField(lineNum) {
+      clearLineInCoords(lineNum, state.occupiedField);
+    }
+
+
+    function clearLineInFixedPieces(lineNum) {
+      var pieces = state.pieces;
+
+      for (var i = 0; i < pieces.length; i++) {
+        clearLineInCoords(lineNum, pieces[i].coords);
+      }
+    }
+
+
+    function clearLineInCoords(lineNum, coords) {
+      coords.splice(lineNum, 1);
+
+      var tmpArr = [];
+
+      for (var i = 0; i < 10; i++) {
+        tmpArr.push(false);
+      }
+
+      coords.unshift(tmpArr);
+    }
   }
 }
 
