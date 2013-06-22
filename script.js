@@ -334,6 +334,7 @@ function timeTick() {
       if (occupiedField[i].every(isTrue)) {
         clearLineInOccupiedField(i);
         clearLineInFixedPieces(i);
+        draw.allFixedPieces();
         fullLines++;
       }
     }
@@ -513,6 +514,7 @@ function drawGame() {
   drawFunctions.currentPiece = currentPiece;
   drawFunctions.nextPiece = nextPiece;
   drawFunctions.fixedPiece = fixedPiece;
+  drawFunctions.allFixedPieces = allFixedPieces;
 
   return drawFunctions;
 
@@ -520,13 +522,13 @@ function drawGame() {
   function currentPiece() {
     if (!state.currentPiece) return;
 
-    clearPiece(state.currentPiece);
+    clearPiecesBySpecialClass(state.currentPiece.specialClass);
     drawPiece(state.currentPiece);
   }
 
 
   function nextPiece() {
-    clearPiece(state.nextPiece);
+    clearPiecesBySpecialClass(state.nextPiece.specialClass);
     drawPiece(state.nextPiece);
   }
 
@@ -534,14 +536,25 @@ function drawGame() {
   function fixedPiece() {
     var pieces = state.pieces;
     var last = pieces.length - 1;
-    pieces[last].specialClass = '';
+    pieces[last].specialClass = 'fixed';
 
     drawPiece(pieces[last]);
   }
 
 
-  function clearPiece(piece) {
-    var cubesToClear = document.getElementsByClassName(piece.specialClass);
+  function allFixedPieces() {
+    var pieces = state.pieces;
+
+    clearPiecesBySpecialClass(pieces[0].specialClass);
+
+    for (var i = 0; i < pieces.length; i++) {
+      drawPiece(pieces[i]);
+    }
+  }
+
+
+  function clearPiecesBySpecialClass(specialClass) {
+    var cubesToClear = document.getElementsByClassName(specialClass);
 
     while (cubesToClear.length) {
       var last = cubesToClear.length - 1;
