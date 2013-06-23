@@ -605,38 +605,6 @@ function drawGame() {
   }
 
 
-  function removeAllChildren() {
-    var fieldElem = document.getElementById('field');
-    while (fieldElem.lastChild) {
-      fieldElem.removeChild(fieldElem.lastChild);
-    }
-  }
-
-
-  function drawCurrentState() {
-    var pieces = state.pieces;
-    var fieldElem = document.getElementById('field');
-
-    for (var k = 0; k < pieces.length; k++) {
-      var piece = pieces[k];
-      var pieceCoords = piece.coords;
-
-      for (var i = 0; i < pieceCoords.length; i++) {
-        for (var j = 0; j < pieceCoords[i].length; j++) {
-          var cube = 0;
-          if (!pieceCoords[i][j]) continue;
-
-          cube = document.createElement('div');
-          cube.style.top = i + 'em';
-          cube.style.left = j + 'em';
-          addClass(cube, piece.className);
-
-          fieldElem.appendChild(cube);
-        }
-      }
-    }
-  }
-
   function addClass(el, cls) {
     var c = el.className ? el.className.split(' ') : [];
     for (var i = 0; i < c.length; i++) {
