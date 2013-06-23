@@ -427,6 +427,8 @@ function timeTick() {
       draw.level();
 
       state.prevLines = state.lines;
+
+      clearInterval(state.intervalId);
       startGame();
     }
   }
