@@ -5,7 +5,7 @@ body {
 
 #game-wrapper {
   border: 1px solid green;
-  font-size: 28pt;
+  font-size: 19pt;
   margin: 0 auto;
   overflow: hidden;
   width: 18em;
@@ -21,10 +21,10 @@ body {
 #info-bar {
   border: 1px solid green;
   float: right;
-  font-size: 20pt;
-  height: 600px;
-  margin: 50px 20px 0 0;
-  width: 250px;
+  font-size: 14pt;
+  height: 422px;
+  margin: 34px 13px 0 0;
+  width: 168px;
 }
 
 #game-info {
@@ -39,12 +39,12 @@ body {
 }
 
 #next-piece-wrapper {
-  font-size: 28pt;
-  height: 240px;
-  margin: 40px auto 0;
+  font-size: 19pt;
+  height: 160px;
+  margin: 27px auto 0;
   position: relative;
   text-align: center;
-  width: 200px;
+  width: 134px;
 }
 
 .cube {
