@@ -12,6 +12,7 @@ var move = makeMoves();
  * by the "key module"
  * state.nextPiece - the next piece that will come after state.currentPiece
  * state.lines - a quantity of cleared lines
+ * state.prevLines - previous cleared lines number
  * state.score - game score
  * state.level - a difficulty level. The higher the level the more
  * frequently the timeTick function is called
@@ -23,6 +24,7 @@ var state = {};
 state.pieces = [];
 state.occupiedField = getNewCoordinateSystem();
 state.lines = 0;
+state.prevLines = 0;
 state.score = 0;
 state.level = 0;
 state.preGameOver = false;
@@ -31,7 +33,7 @@ startGame();
 
 
 function startGame() {
-  state.intervalId = setInterval(timeTick, (1000 - 50 * state.level));
+  state.intervalId = setInterval(timeTick, (1000 - 10 * state.level));
 }
 
 
@@ -326,8 +328,9 @@ function timeTick() {
     gameOver();
   }
 
-  getRandomPiece();
   manageLevel();
+
+  getRandomPiece();
 
 
   function updateOccupiedField() {
@@ -419,8 +422,11 @@ function timeTick() {
 
 
   function manageLevel() {
-    if (state.line % 2 == 0) {
+    if (state.prevLines != state.lines && state.lines % 2 == 0) {
       state.level++;
+      draw.level();
+
+      state.prevLines = state.lines;
       startGame();
     }
   }
@@ -570,6 +576,7 @@ function drawGame() {
   drawFunctions.allFixedPieces = allFixedPieces;
   drawFunctions.clearedLinesNumber = clearedLinesNumber;
   drawFunctions.score = score;
+  drawFunctions.level = level;
 
   return drawFunctions;
 
@@ -618,6 +625,13 @@ function drawGame() {
     var scoreElem = document.getElementById('score');
     scoreElem.innerHTML = state.score;
   }
+
+
+  function level() {
+    var levelElem = document.getElementById('level');
+    levelElem.innerHTML = state.level;
+  }
+
 
 
   function clearPiecesBySpecialClass(specialClass) {
