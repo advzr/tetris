@@ -26,8 +26,13 @@ state.lines = 0;
 state.score = 0;
 state.level = 0;
 state.preGameOver = false;
-state.intervalId = setInterval(timeTick, 1000);
 
+startGame();
+
+
+function startGame() {
+  state.intervalId = setInterval(timeTick, (1000 - 50 * state.level));
+}
 
 
 function getNewCoordinateSystem() {
@@ -322,6 +327,7 @@ function timeTick() {
   }
 
   getRandomPiece();
+  manageLevel();
 
 
   function updateOccupiedField() {
@@ -408,6 +414,14 @@ function timeTick() {
       }
 
       coords.unshift(tmpArr);
+    }
+  }
+
+
+  function manageLevel() {
+    if (state.line % 2 == 0) {
+      state.level++;
+      startGame();
     }
   }
 }
