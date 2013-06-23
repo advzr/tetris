@@ -22,7 +22,7 @@ state.pieces = [];
 state.occupiedField = getNewCoordinateSystem();
 state.lines = 0;
 state.score = 0;
-state.level = 1;
+state.level = 0;
 state.intervalId = setInterval(timeTick, 1000);
 
 
@@ -331,6 +331,7 @@ function timeTick() {
   function clearLine() {
     var occupiedField = state.occupiedField;
     var fullLines = 0;
+    var score = 0;
 
     for (var i = 0; i < occupiedField.length; i++) {
       if (occupiedField[i].every(isTrue)) {
@@ -339,9 +340,30 @@ function timeTick() {
         draw.allFixedPieces();
 
         state.lines++;
-        draw.clearedLinesNumber();
         fullLines++;
       }
+    }
+
+    draw.clearedLinesNumber();
+
+    switch (fullLines) {
+      case 1:
+        score = 40 * (state.level + 1);
+        break;
+      case 2:
+        score = 100 * (state.level + 1);
+        break;
+      case 3:
+        score = 300 * (state.level + 1);
+        break;
+      case 4:
+        score = 1200 * (state.level + 1);
+        break;
+    }
+
+    if (score) {
+      state.score += score;
+      draw.score();
     }
 
 
@@ -519,6 +541,7 @@ function drawGame() {
   drawFunctions.fixedPiece = fixedPiece;
   drawFunctions.allFixedPieces = allFixedPieces;
   drawFunctions.clearedLinesNumber = clearedLinesNumber;
+  drawFunctions.score = score;
 
   return drawFunctions;
 
@@ -560,6 +583,12 @@ function drawGame() {
   function clearedLinesNumber() {
     var linesElem = document.getElementById('lines');
     linesElem.innerHTML = state.lines;
+  }
+
+
+  function score() {
+    var scoreElem = document.getElementById('score');
+    scoreElem.innerHTML = state.score;
   }
 
 
