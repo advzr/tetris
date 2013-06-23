@@ -30,7 +30,12 @@ state.level = 0;
 state.preGameOver = false;
 state.paused = false;
 
-startGame();
+if (showStartMenu()) {
+  getRandomPiece();
+  getRandomPiece();
+  getRandomPiece();
+  startGame();
+}
 
 
 function startGame() {
@@ -310,9 +315,6 @@ function makeMoves() {
     return true;
   }
 }
-/* 3) function check(coords)
- * Returns true if coords are within field and are not occupied by
- * other pieces */
 
 /* 4) timeTick function
  * Tries to call move.down(). If fails then pushes it into state.pieces,
@@ -445,12 +447,6 @@ function timeTick() {
 /* 5) createRandomPiece function
  * Creates new random piece, puts it in window as a next piece,
  * takes the next piece out of that window and puts it in the array of pieces */
-
-// for development purposes to delete later
-getRandomPiece();
-getRandomPiece();
-getRandomPiece();
-//
 
 
 function getRandomPiece() {
@@ -733,6 +729,6 @@ function pause() {
 }
 
 
-/* 7) clearLine function
- * Removes a full line consisting of state.pieces and unshifts their coordinates
- * filling them with an empty line */
+function showStartMenu() {
+  return confirm('Welcome!\n\nControls:\nkeyboard arrows\nP - pause\n\nStart Game?');
+}
