@@ -1,9 +1,9 @@
 body {
   background: black;
+  color: #B4C3CA;
 }
 
 #game-wrapper {
-  color: #B4C3CA;
   border: 1px solid green;
   font-size: 28pt;
   margin: 0 auto;
