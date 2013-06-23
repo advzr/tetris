@@ -28,6 +28,7 @@ state.prevLines = 0;
 state.score = 0;
 state.level = 0;
 state.preGameOver = false;
+state.paused = false;
 
 startGame();
 
@@ -74,6 +75,9 @@ function watchKeys() {
       case 40:
         key.down();
         break;
+      case 80:
+        key.pause();
+        break;
     }
   }
 
@@ -93,6 +97,10 @@ function watchKeys() {
 
   key.right = function() {
     move.right();
+  };
+
+  key.pause = function() {
+    pause();
   };
 
   return key;
@@ -712,6 +720,18 @@ function gameOver() {
   clearInterval(state.intervalId);
   alert('Game Over');
 }
+
+
+function pause() {
+  if (state.paused) {
+    startGame();
+    state.paused = false;
+  } else {
+    clearInterval(state.intervalId);
+    state.paused = true;
+  }
+}
+
 
 /* 7) clearLine function
  * Removes a full line consisting of state.pieces and unshifts their coordinates
