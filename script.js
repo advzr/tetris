@@ -339,8 +339,6 @@ function timeTick() {
       }
     }
 
-    console.log(fullLines);
-
 
     function isTrue(a) {
       return !!a;
@@ -566,26 +564,30 @@ function drawGame() {
   function drawPiece(piece) {
     var coords = piece.coords;
     var fieldElem = document.getElementById('field');
+    var fieldForNextPiece = document.getElementById('next-piece-wrapper');
 
     for (var i = 0; i < coords.length; i++) {
       for (var j = 0; j < coords[i].length; j++) {
         if (!coords[i][j]) continue;
 
         var cube = document.createElement('div');
-        var top = i;
-        var left = j;
         addClass(cube, piece.className);
         addClass(cube, piece.specialClass);
 
+        var top = i;
+        var left = j;
+
         if (piece.specialClass == 'next') {
-          top += 4;
-          left += 9;
+          top += 2;
+          left -= 2;
+          fieldForNextPiece.appendChild(cube);
+        } else {
+
+          fieldElem.appendChild(cube);
         }
 
         cube.style.top = top + 'em';
         cube.style.left = left + 'em';
-
-        fieldElem.appendChild(cube);
       }
     }
   }
