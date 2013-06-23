@@ -15,6 +15,8 @@ var move = makeMoves();
  * state.score - game score
  * state.level - a difficulty level. The higher the level the more
  * frequently the timeTick function is called
+ * state.preGameOver - becomes true if move.down() fails
+ * and false if move.down() succeeds afterwards
  * state.intervalId - id to clear setInterval */
 
 var state = {};
@@ -23,6 +25,7 @@ state.occupiedField = getNewCoordinateSystem();
 state.lines = 0;
 state.score = 0;
 state.level = 0;
+state.preGameOver = false;
 state.intervalId = setInterval(timeTick, 1000);
 
 
@@ -72,7 +75,9 @@ function watchKeys() {
   };
 
   key.down = function() {
-    move.down();
+    if (move.down()) {
+      state.preGameOver = false;
+    }
   };
 
   key.left = function() {
@@ -302,13 +307,20 @@ function makeMoves() {
 
 function timeTick() {
   if (move.down()) {
+    state.preGameOver = false;
     return;
   }
 
   state.pieces.push(state.currentPiece);
   updateOccupiedField();
   draw.fixedPiece();
+
   clearLine();
+
+  if (state.preGameOver) {
+    gameOver();
+  }
+
   getRandomPiece();
 
 
@@ -414,6 +426,8 @@ getRandomPiece();
 function getRandomPiece() {
   var typeNumber = getRandomTypeNumber();
   var pieceType = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+
+  state.preGameOver = true;
 
   state.currentPiece = state.nextPiece;
 
@@ -660,6 +674,13 @@ function drawGame() {
     }
     return false;
   }
+}
+
+
+
+function gameOver() {
+  clearInterval(state.intervalId);
+  alert('Game Over');
 }
 
 /* 7) clearLine function
