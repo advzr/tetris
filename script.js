@@ -325,7 +325,8 @@ function mainLoop() {
   clearLine();
 
   if (state.preGameOver) {
-    gameOver();
+    clearInterval(state.intervalId);
+    draw.gameOverMenu();
   }
 
   manageLevel();
@@ -570,6 +571,7 @@ function makeDrawFunctions() {
   drawFunctions.score = score;
   drawFunctions.level = level;
   drawFunctions.startMenu = startMenu;
+  drawFunctions.gameOverMenu = gameOverMenu;
 
   return drawFunctions;
 
@@ -636,6 +638,13 @@ function makeDrawFunctions() {
   }
 
 
+  function gameOverMenu() {
+    var menuMessages = ['Game Over!'];
+    var buttonValue = 'Ok';
+
+    drawMenu(menuMessages, buttonValue);
+  }
+
 
   function drawMenu(menuMessages, buttonValue, func) {
     var menuBackground = document.createElement('div');
@@ -658,7 +667,10 @@ function makeDrawFunctions() {
     button.className = 'button';
     button.value = buttonValue;
     button.addEventListener('click', closeMenu, false);
-    button.addEventListener('click', func, false);
+
+    if (func) {
+      button.addEventListener('click', func, false);
+    }
     menuMessageElem.appendChild(button);
 
 
@@ -741,12 +753,6 @@ function makeDrawFunctions() {
   }
 }
 
-
-
-function gameOver() {
-  clearInterval(state.intervalId);
-  alert('Game Over');
-}
 
 
 function pause() {
