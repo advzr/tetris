@@ -1,24 +1,29 @@
 'use strict';
+
 // init section
-var draw = drawGame();
-var move = makeMoves();
+var draw = makeDrawFunctions();
+var move = makeMoveFunctions();
+document.onkeydown = makeKeyboardControls();
 
 /* state object
  * state.pieces - all pieces that are already on the bottom
- * of the field and are not moving
+ *  of the field and are not moving
  * state.occupiedField - a field with sections marked as
- * occipied by state.pieces
+ *  occipied by state.pieces
  * state.currentPiece - the current active piece controlled
- * by the "key module"
+ *  by the player
  * state.nextPiece - the next piece that will come after state.currentPiece
- * state.lines - a quantity of cleared lines
- * state.prevLines - previous cleared lines number
+ * state.lines - a number of cleared lines
+ * state.prevLines - previous cleared lines number (required for
+ *  manageLevel function)
  * state.score - game score
- * state.level - a difficulty level. The higher the level the more
- * frequently the timeTick function is called
- * state.preGameOver - becomes true if move.down() fails
- * and false if move.down() succeeds afterwards
- * state.intervalId - id to clear setInterval */
+ * state.level - game difficulty level. The higher the level the more
+ *  frequently the mainLoop function is called
+ * state.preGameOver - becomes true after a new piece is generated
+ *  and becomes false if move.down() succeeds afterwards
+ * state.intervalId - id to clear setInterval
+ * state.firstStart - when the game starts for the first time this property
+ *  is true in order to do something one time before the game is started */
 
 var state = {};
 state.pieces = [];
@@ -29,17 +34,20 @@ state.score = 0;
 state.level = 0;
 state.preGameOver = false;
 state.paused = false;
+state.firstStart = true;
 
 if (showStartMenu()) {
-  getRandomPiece();
-  getRandomPiece();
-  getRandomPiece();
   startGame();
 }
 
 
 function startGame() {
-  state.intervalId = setInterval(timeTick, (1000 - 10 * state.level));
+  if (state.firstStart) {
+    getRandomPiece();
+    getRandomPiece();
+    state.firstStart = false;
+  }
+  state.intervalId = setInterval(mainLoop, (1000 - 10 * state.level));
 }
 
 
@@ -59,11 +67,9 @@ function getNewCoordinateSystem() {
   return coords;
 }
 
-/* 1) module key
- * up(). down(), left(). right()
- * Catches keyboard events and calls the move module */
 
-function watchKeys() {
+
+function makeKeyboardControls() {
   function key(event) {
     var event = event || window.event;
 
@@ -112,18 +118,8 @@ function watchKeys() {
 }
 
 
-document.onkeydown = watchKeys();
 
-
-/* 2) module move
- * up(), down(), left(), right()
- * Moves the last piece in the field by generating newCoords, then checks
- * newCoords with the check function. If the check function returns true,
- * replaces currentCoords with newCoords and calls the drawGame function. */
-
-
-
-function makeMoves() {
+function makeMoveFunctions() {
   var moves = {};
   moves.left = left;
   moves.right = right;
@@ -316,13 +312,9 @@ function makeMoves() {
   }
 }
 
-/* 4) timeTick function
- * Tries to call move.down(). If fails then pushes it into state.pieces,
- * updates state.occupiedField, calls the clearLine function and calls
- * the createRandomPiece function */
 
 
-function timeTick() {
+function mainLoop() {
   if (move.down()) {
     state.preGameOver = false;
     return;
@@ -362,7 +354,6 @@ function timeTick() {
   function clearLine() {
     var occupiedField = state.occupiedField;
     var fullLines = 0;
-    var score = 0;
 
     for (var i = 0; i < occupiedField.length; i++) {
       if (occupiedField[i].every(isTrue)) {
@@ -376,26 +367,8 @@ function timeTick() {
     }
 
     draw.clearedLinesNumber();
+    calculateScore();
 
-    switch (fullLines) {
-      case 1:
-        score = 40 * (state.level + 1);
-        break;
-      case 2:
-        score = 100 * (state.level + 1);
-        break;
-      case 3:
-        score = 300 * (state.level + 1);
-        break;
-      case 4:
-        score = 1200 * (state.level + 1);
-        break;
-    }
-
-    if (score) {
-      state.score += score;
-      draw.score();
-    }
 
 
     function isTrue(a) {
@@ -428,6 +401,31 @@ function timeTick() {
 
       coords.unshift(tmpArr);
     }
+
+
+    function calculateScore() {
+      var score = 0;
+
+      switch (fullLines) {
+        case 1:
+          score = 40 * (state.level + 1);
+          break;
+        case 2:
+          score = 100 * (state.level + 1);
+          break;
+        case 3:
+          score = 300 * (state.level + 1);
+          break;
+        case 4:
+          score = 1200 * (state.level + 1);
+          break;
+      }
+
+      if (score) {
+        state.score += score;
+        draw.score();
+      }
+    }
   }
 
 
@@ -444,9 +442,6 @@ function timeTick() {
   }
 }
 
-/* 5) createRandomPiece function
- * Creates new random piece, puts it in window as a next piece,
- * takes the next piece out of that window and puts it in the array of pieces */
 
 
 function getRandomPiece() {
@@ -478,8 +473,8 @@ function getRandomPiece() {
   }
 }
 
+
 function Piece(type) {
-  // Possible type variants: I, J, L, O, S, T, Z
   this.type = type;
   this.className = type + '-piece';
   this.className += ' cube';
@@ -565,15 +560,8 @@ function Piece(type) {
 }
 
 
-/* 6) drawGame function
- * Draws all pieces on the field
- * there are subfunctions:
- *  to draw state.pieces
- *  to draw state.currentPiece
- *  to draw state.nextPiece
- *  to animate a cleared line */
 
-function drawGame() {
+function makeDrawFunctions() {
   var drawFunctions = {};
 
   drawFunctions.currentPiece = currentPiece;
