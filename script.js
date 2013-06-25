@@ -36,9 +36,7 @@ state.preGameOver = false;
 state.paused = false;
 state.firstStart = true;
 
-if (showStartMenu()) {
-  startGame();
-}
+draw.startMenu();
 
 
 function startGame() {
@@ -571,6 +569,7 @@ function makeDrawFunctions() {
   drawFunctions.clearedLinesNumber = clearedLinesNumber;
   drawFunctions.score = score;
   drawFunctions.level = level;
+  drawFunctions.startMenu = startMenu;
 
   return drawFunctions;
 
@@ -626,6 +625,50 @@ function makeDrawFunctions() {
     levelElem.innerHTML = state.level;
   }
 
+
+  function startMenu() {
+    var menuMessages = ['Welcome!', 'Control keys:',
+        'arrow keys', 'P - pause'
+    ];
+    var buttonValue = 'Start Game';
+
+    drawMenu(menuMessages, buttonValue, startGame);
+  }
+
+
+
+  function drawMenu(menuMessages, buttonValue, func) {
+    var menuBackground = document.createElement('div');
+    menuBackground.className = 'menu-background';
+
+    var menuMessageElem = document.createElement('div');
+    menuMessageElem.className = 'menu-message';
+    menuBackground.appendChild(menuMessageElem);
+
+    for (var i = 0; i < menuMessages.length; i++) {
+      var p = document.createElement('p');
+      var textNode = document.createTextNode(menuMessages[i]);
+
+      p.appendChild(textNode);
+      menuMessageElem.appendChild(p);
+    }
+
+    var button = document.createElement('input');
+    button.type = 'button';
+    button.className = 'button';
+    button.value = buttonValue;
+    button.addEventListener('click', closeMenu, false);
+    button.addEventListener('click', func, false);
+    menuMessageElem.appendChild(button);
+
+
+    document.body.appendChild(menuBackground);
+
+
+    function closeMenu() {
+      menuBackground.parentNode.removeChild(menuBackground);
+    }
+  }
 
 
   function clearPiecesBySpecialClass(specialClass) {
@@ -714,9 +757,4 @@ function pause() {
     clearInterval(state.intervalId);
     state.paused = true;
   }
-}
-
-
-function showStartMenu() {
-  return confirm('Welcome!\n\nControls:\nkeyboard arrows\nP - pause\n\nStart Game?');
 }

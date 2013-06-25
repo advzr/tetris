@@ -3,6 +3,28 @@ body {
   color: #B4C3CA;
 }
 
+.menu-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+.menu-message {
+  background: rgba(128, 128, 128, 0.8);
+  margin: 0 auto;
+  padding: 5% 0;
+  position: relative;
+  text-align: center;
+  top: 20%;
+}
+
+.menu-message input {
+  background: white;
+}
+
 #game-wrapper {
   border: 1px solid green;
   font-size: 19pt;
