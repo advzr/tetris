@@ -572,6 +572,7 @@ function makeDrawFunctions() {
   drawFunctions.level = level;
   drawFunctions.startMenu = startMenu;
   drawFunctions.gameOverMenu = gameOverMenu;
+  drawFunctions.pauseMenu = pauseMenu;
 
   return drawFunctions;
 
@@ -646,9 +647,17 @@ function makeDrawFunctions() {
   }
 
 
+  function pauseMenu() {
+    var menuMessages = ['Game paused'];
+    var buttonValue = 'Continue';
+
+    drawMenu(menuMessages, buttonValue, pause);
+  }
+
+
   function drawMenu(menuMessages, buttonValue, func) {
     var menuBackground = document.createElement('div');
-    menuBackground.className = 'menu-background';
+    menuBackground.id = 'menu-background';
 
     var menuMessageElem = document.createElement('div');
     menuMessageElem.className = 'menu-message';
@@ -758,9 +767,17 @@ function makeDrawFunctions() {
 function pause() {
   if (state.paused) {
     startGame();
+
+    var pauseMenu = document.getElementById('menu-background');
+
+    if (pauseMenu) {
+      pauseMenu.parentNode.removeChild(pauseMenu);
+    }
+
     state.paused = false;
   } else {
     clearInterval(state.intervalId);
+    draw.pauseMenu();
     state.paused = true;
   }
 }

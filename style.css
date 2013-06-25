@@ -3,7 +3,7 @@ body {
   color: #B4C3CA;
 }
 
-.menu-background {
+#menu-background {
   position: fixed;
   left: 0;
   top: 0;
