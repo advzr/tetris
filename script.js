@@ -587,7 +587,15 @@ function makeDrawFunctions() {
 
   function nextPiece() {
     clearPiecesBySpecialClass(state.nextPiece.specialClass);
-    drawPiece(state.nextPiece);
+
+    var nextPieceWrapper = document.getElementById('next-piece-wrapper');
+    var nextPiece = document.createElement('div');
+    var specialClass = state.nextPiece.specialClass;
+    var visualStyle = state.nextPiece.type + '-piece-next';
+
+    addClass(nextPiece, specialClass);
+    addClass(nextPiece, visualStyle);
+    nextPieceWrapper.appendChild(nextPiece);
   }
 
 
@@ -718,14 +726,7 @@ function makeDrawFunctions() {
         var top = i;
         var left = j;
 
-        if (piece.specialClass == 'next') {
-          top += 2;
-          left -= 2;
-          fieldForNextPiece.appendChild(cube);
-        } else {
-
-          fieldElem.appendChild(cube);
-        }
+        fieldElem.appendChild(cube);
 
         cube.style.top = top + 'em';
         cube.style.left = left + 'em';

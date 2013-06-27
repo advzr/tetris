@@ -14,8 +14,9 @@ body {
 
 .menu-message {
   background: rgba(128, 128, 128, 0.8);
+  height: 200px;
   margin: 0 auto;
-  padding: 5% 0;
+  padding: 20px 0;
   position: relative;
   text-align: center;
   top: 20%;
@@ -85,11 +86,13 @@ body {
 
 #next-piece-wrapper {
   background: url(images/next.png);
+  display: table-cell;
   font-size: 18pt;
-  height: 160px;
+  height: 145px;
   margin: 0;
-  position: relative;
+  padding-top: 15px;
   text-align: center;
+  vertical-align: middle;
   width: 160px;
 }
 
@@ -128,4 +131,59 @@ body {
 
 .Z-piece {
   background: url(images/cube-red.png);
+}
+
+.I-piece-next {
+  background: url(images/I-piece.png);
+  display: inline-block;
+  height: 24px;
+  width: 96px;
+}
+
+.J-piece-next {
+  background: url(images/J-piece.png);
+  display: inline-block;
+  height: 72px;
+  margin-top: 15px;
+  width: 48px;
+}
+
+.L-piece-next {
+  background: url(images/L-piece.png);
+  display: inline-block;
+  height: 72px;
+  margin-top: 15px;
+  width: 48px;
+}
+
+.O-piece-next {
+  background: url(images/O-piece.png);
+  display: inline-block;
+  height: 48px;
+  margin-top: 15px;
+  width: 48px;
+}
+
+.S-piece-next {
+  background: url(images/S-piece.png);
+  display: inline-block;
+  height: 48px;
+  margin-top: 15px;
+  width: 72px;
+}
+
+.T-piece-next {
+  background: url(images/T-piece.png);
+  display: inline-block;
+  height: 48px;
+  margin-top: 15px;
+  width: 72px;
+}
+
+.Z-piece-next {
+  background: url(images/Z-piece.png);
+  display: inline-block;
+  height: 48px;
+  margin-top: 15px;
+  width: 72px;
 }
