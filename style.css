@@ -29,14 +29,20 @@ body {
   font-size: 18pt;
   margin: 0 auto;
   overflow: hidden;
-  width: 18em;
+  width: 500px;
+}
+
+.field-wrapper {
+  background: url(images/field.png);
+  height: 590px;
+  padding: 20px 20px 0;
+  width: 240px;
 }
 
 #field {
-  border: 1px solid green;
-  height: 23em;
+  height: 552px;
   position: relative;
-  width: 10em;
+  width: 240px;
 }
 
 #info-bar {
