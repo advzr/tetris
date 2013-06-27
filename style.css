@@ -1,5 +1,5 @@
 body {
-  background: black;
+  background: #01010e;
   color: #B4C3CA;
 }
 
@@ -26,8 +26,7 @@ body {
 }
 
 #game-wrapper {
-  border: 1px solid green;
-  font-size: 19pt;
+  font-size: 18pt;
   margin: 0 auto;
   overflow: hidden;
   width: 18em;
@@ -41,19 +40,37 @@ body {
 }
 
 #info-bar {
-  border: 1px solid green;
   float: right;
   font-size: 14pt;
-  height: 422px;
   margin: 34px 13px 0 0;
-  width: 168px;
 }
 
-#game-info {
+#statisctics {
   list-style: none;
   margin: 20px 0 0;
   padding: 0;
   text-align: center;
+}
+
+#level {
+  background: url(images/level.png);
+  height: 55px;
+  padding-top: 45px;
+  width: 160px;
+}
+
+#lines {
+  background: url(images/lines.png);
+  height: 55px;
+  padding-top: 45px;
+  width: 160px;
+}
+
+#score {
+  background: url(images/score.png);
+  height: 55px;
+  padding-top: 45px;
+  width: 160px;
 }
 
 #game-info li {
@@ -61,16 +78,16 @@ body {
 }
 
 #next-piece-wrapper {
-  font-size: 19pt;
+  background: url(images/next.png);
+  font-size: 18pt;
   height: 160px;
-  margin: 27px auto 0;
+  margin: 0;
   position: relative;
   text-align: center;
-  width: 134px;
+  width: 160px;
 }
 
 .cube {
-  border: 4px outset black;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   display: block;
@@ -80,29 +97,29 @@ body {
 }
 
 .I-piece {
-  background: cyan;
+  background: url(images/cube-cyan.png);
 }
 
 .J-piece {
-  background: blue;
+  background: url(images/cube-blue.png);
 }
 
 .L-piece {
-  background: orange;
+  background: url(images/cube-orange.png);
 }
 
 .O-piece {
-  background: yellow;
+  background: url(images/cube-yellow.png);
 }
 
 .S-piece {
-  background: green;
+  background: url(images/cube-green.png);
 }
 
 .T-piece {
-  background: purple;
+  background: url(images/cube-purple.png);
 }
 
 .Z-piece {
-  background: red;
+  background: url(images/cube-red.png);
 }
