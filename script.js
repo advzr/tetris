@@ -638,10 +638,10 @@ function makeDrawFunctions() {
 
 
   function startMenu() {
-    var menuMessages = ['Welcome!', 'Control keys:',
+    var menuMessages = ['Control keys:',
         'arrow keys', 'P - pause'
     ];
-    var buttonValue = 'Start Game';
+    var buttonValue = 'START';
 
     drawMenu(menuMessages, buttonValue, startGame);
   }
@@ -667,9 +667,13 @@ function makeDrawFunctions() {
     var menuBackground = document.createElement('div');
     menuBackground.id = 'menu-background';
 
+    var messageWrapper = document.createElement('div');
+    messageWrapper.className = 'message-wrapper';
+    menuBackground.appendChild(messageWrapper);
+
     var menuMessageElem = document.createElement('div');
     menuMessageElem.className = 'menu-message';
-    menuBackground.appendChild(menuMessageElem);
+    messageWrapper.appendChild(menuMessageElem);
 
     for (var i = 0; i < menuMessages.length; i++) {
       var p = document.createElement('p');
