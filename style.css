@@ -42,6 +42,11 @@ body {
   background: url(images/button-pressed.png);
 }
 
+.game-bg {
+  background: url(images/main-bg.jpg) center top no-repeat #01010e;
+  width: 100%;
+}
+
 #game-wrapper {
   font-size: 18pt;
   margin: 0 auto;
