@@ -70,7 +70,7 @@ body {
 
 #statisctics {
   list-style: none;
-  margin: 20px 0 0;
+  margin: 93px 0 0;
   padding: 0;
   text-align: center;
 }
@@ -91,7 +91,7 @@ body {
 
 #score {
   background: url(images/score.png);
-  height: 55px;
+  height: 75px;
   padding-top: 45px;
   width: 160px;
 }
