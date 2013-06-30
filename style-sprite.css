@@ -13,7 +13,8 @@ body {
 }
 
 .message-wrapper {
-  background: url(images/menu-bg.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -0px;
   height: 200px;
   line-height: 200px;
   margin: 0 auto; 
@@ -31,7 +32,9 @@ body {
 }
 
 .menu-message input {
-  background: url(images/button.png);
+  background-color: transparent;
+  background-image: url('images/mysprite.png');
+  background-position: left -240px;
   color: white;
   border: none;
   height: 60px;
@@ -39,11 +42,14 @@ body {
 }
 
 .menu-message input:active {
-  background: url(images/button-pressed.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -300px;
 }
 
 .game-bg {
-  background: url(images/main-bg.jpg) center top no-repeat #01010e;
+  background-position: center top;
+  background-image: url(images/main-bg.jpg);
+  background-repeat: no-repeat;
   width: 100%;
 }
 
@@ -55,7 +61,8 @@ body {
 }
 
 .field-wrapper {
-  background: url(images/field.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -360px;
   height: 590px;
   padding: 20px 20px 0;
   width: 240px;
@@ -81,21 +88,24 @@ body {
 }
 
 #level {
-  background: url(images/level.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -970px;
   height: 55px;
   padding-top: 45px;
   width: 160px;
 }
 
 #lines {
-  background: url(images/lines.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1070px;
   height: 55px;
   padding-top: 45px;
   width: 160px;
 }
 
 #score {
-  background: url(images/score.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1170px;
   height: 75px;
   padding-top: 45px;
   width: 160px;
@@ -106,7 +116,8 @@ body {
 }
 
 #next-piece-wrapper {
-  background: url(images/next.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1290px;
   display: table-cell;
   font-size: 18pt;
   height: 145px;
@@ -127,42 +138,51 @@ body {
 }
 
 .I-piece {
-  background: url(images/cube-cyan.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1450px;
 }
 
 .J-piece {
-  background: url(images/cube-blue.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1474px;
 }
 
 .L-piece {
-  background: url(images/cube-orange.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1498px;
 }
 
 .O-piece {
-  background: url(images/cube-yellow.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1522px;
 }
 
 .S-piece {
-  background: url(images/cube-green.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1546px;
 }
 
 .T-piece {
-  background: url(images/cube-purple.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1570px;
 }
 
 .Z-piece {
-  background: url(images/cube-red.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1594px;
 }
 
 .I-piece-next {
-  background: url(images/I-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1618px;
   display: inline-block;
   height: 24px;
   width: 96px;
 }
 
 .J-piece-next {
-  background: url(images/J-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1642px;
   display: inline-block;
   height: 72px;
   margin-top: 15px;
@@ -170,7 +190,8 @@ body {
 }
 
 .L-piece-next {
-  background: url(images/L-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1714px;
   display: inline-block;
   height: 72px;
   margin-top: 15px;
@@ -178,7 +199,8 @@ body {
 }
 
 .O-piece-next {
-  background: url(images/O-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1786px;
   display: inline-block;
   height: 48px;
   margin-top: 15px;
@@ -186,7 +208,8 @@ body {
 }
 
 .S-piece-next {
-  background: url(images/S-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1834px;
   display: inline-block;
   height: 48px;
   margin-top: 15px;
@@ -194,7 +217,8 @@ body {
 }
 
 .T-piece-next {
-  background: url(images/T-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1882px;
   display: inline-block;
   height: 48px;
   margin-top: 15px;
@@ -202,7 +226,8 @@ body {
 }
 
 .Z-piece-next {
-  background: url(images/Z-piece.png);
+  background-image: url('images/mysprite.png');
+  background-position: left -1930px;
   display: inline-block;
   height: 48px;
   margin-top: 15px;
