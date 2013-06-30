@@ -36,9 +36,7 @@ state.preGameOver = false;
 state.paused = false;
 state.firstStart = true;
 
-if (showStartMenu()) {
-  startGame();
-}
+draw.startMenu();
 
 
 function startGame() {
@@ -327,7 +325,8 @@ function mainLoop() {
   clearLine();
 
   if (state.preGameOver) {
-    gameOver();
+    clearInterval(state.intervalId);
+    draw.gameOverMenu();
   }
 
   manageLevel();
@@ -571,6 +570,9 @@ function makeDrawFunctions() {
   drawFunctions.clearedLinesNumber = clearedLinesNumber;
   drawFunctions.score = score;
   drawFunctions.level = level;
+  drawFunctions.startMenu = startMenu;
+  drawFunctions.gameOverMenu = gameOverMenu;
+  drawFunctions.pauseMenu = pauseMenu;
 
   return drawFunctions;
 
@@ -585,7 +587,15 @@ function makeDrawFunctions() {
 
   function nextPiece() {
     clearPiecesBySpecialClass(state.nextPiece.specialClass);
-    drawPiece(state.nextPiece);
+
+    var nextPieceWrapper = document.getElementById('next-piece-wrapper');
+    var nextPiece = document.createElement('div');
+    var specialClass = state.nextPiece.specialClass;
+    var visualStyle = state.nextPiece.type + '-piece-next';
+
+    addClass(nextPiece, specialClass);
+    addClass(nextPiece, visualStyle);
+    nextPieceWrapper.appendChild(nextPiece);
   }
 
 
@@ -627,6 +637,72 @@ function makeDrawFunctions() {
   }
 
 
+  function startMenu() {
+    var menuMessages = ['Control keys:',
+        'arrow keys', 'P - pause'
+    ];
+    var buttonValue = 'START';
+
+    drawMenu(menuMessages, buttonValue, startGame);
+  }
+
+
+  function gameOverMenu() {
+    var menuMessages = ['Game Over!'];
+    var buttonValue = 'Ok';
+
+    drawMenu(menuMessages, buttonValue);
+  }
+
+
+  function pauseMenu() {
+    var menuMessages = ['Game paused'];
+    var buttonValue = 'Continue';
+
+    drawMenu(menuMessages, buttonValue, pause);
+  }
+
+
+  function drawMenu(menuMessages, buttonValue, func) {
+    var menuBackground = document.createElement('div');
+    menuBackground.id = 'menu-background';
+
+    var messageWrapper = document.createElement('div');
+    messageWrapper.className = 'message-wrapper';
+    menuBackground.appendChild(messageWrapper);
+
+    var menuMessageElem = document.createElement('div');
+    menuMessageElem.className = 'menu-message';
+    messageWrapper.appendChild(menuMessageElem);
+
+    for (var i = 0; i < menuMessages.length; i++) {
+      var p = document.createElement('p');
+      var textNode = document.createTextNode(menuMessages[i]);
+
+      p.appendChild(textNode);
+      menuMessageElem.appendChild(p);
+    }
+
+    var button = document.createElement('input');
+    button.type = 'button';
+    button.className = 'button';
+    button.value = buttonValue;
+    button.addEventListener('click', closeMenu, false);
+
+    if (func) {
+      button.addEventListener('click', func, false);
+    }
+    menuMessageElem.appendChild(button);
+
+
+    document.body.appendChild(menuBackground);
+
+
+    function closeMenu() {
+      menuBackground.parentNode.removeChild(menuBackground);
+    }
+  }
+
 
   function clearPiecesBySpecialClass(specialClass) {
     var cubesToClear = document.getElementsByClassName(specialClass);
@@ -654,14 +730,7 @@ function makeDrawFunctions() {
         var top = i;
         var left = j;
 
-        if (piece.specialClass == 'next') {
-          top += 2;
-          left -= 2;
-          fieldForNextPiece.appendChild(cube);
-        } else {
-
-          fieldElem.appendChild(cube);
-        }
+        fieldElem.appendChild(cube);
 
         cube.style.top = top + 'em';
         cube.style.left = left + 'em';
@@ -700,23 +769,20 @@ function makeDrawFunctions() {
 
 
 
-function gameOver() {
-  clearInterval(state.intervalId);
-  alert('Game Over');
-}
-
-
 function pause() {
   if (state.paused) {
     startGame();
+
+    var pauseMenu = document.getElementById('menu-background');
+
+    if (pauseMenu) {
+      pauseMenu.parentNode.removeChild(pauseMenu);
+    }
+
     state.paused = false;
   } else {
     clearInterval(state.intervalId);
+    draw.pauseMenu();
     state.paused = true;
   }
-}
-
-
-function showStartMenu() {
-  return confirm('Welcome!\n\nControls:\nkeyboard arrows\nP - pause\n\nStart Game?');
 }
