@@ -23,7 +23,8 @@ document.onkeydown = makeKeyboardControls();
  *  and becomes false if move.down() succeeds afterwards
  * state.intervalId - id to clear setInterval
  * state.firstStart - when the game starts for the first time this property
- *  is true in order to do something one time before the game is started */
+ *  is true in order to do something one time before the game is started
+ * state.paused - if true, the game is paused */
 
 var state = {};
 state.pieces = [];
@@ -128,6 +129,8 @@ function makeMoveFunctions() {
 
 
   function left() {
+    if (state.paused) return;
+
     var currentCoords = state.currentPiece.coords;
     var newCoords = getNewCoordinateSystem();
 
@@ -154,6 +157,8 @@ function makeMoveFunctions() {
 
 
   function right() {
+    if (state.paused) return;
+
     var currentCoords = state.currentPiece.coords;
     var newCoords = getNewCoordinateSystem();
 
@@ -180,6 +185,8 @@ function makeMoveFunctions() {
 
 
   function up() {
+    if (state.paused) return;
+
     var currentPiece = state.currentPiece;
     var currentCoords = currentPiece.coords;
     var type = currentPiece.type;
@@ -271,6 +278,8 @@ function makeMoveFunctions() {
 
 
   function down() {
+    if (state.paused) return;
+
     var currentCoords = state.currentPiece.coords;
     var newCoords = getNewCoordinateSystem();
 
