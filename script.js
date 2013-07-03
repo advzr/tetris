@@ -148,7 +148,7 @@ function makeMoveFunctions() {
 
     state.currentPiece.coords = newCoords;
     state.currentPiece.pivotPoint.x--;
-    draw.currentPiece();
+    draw.currentPiece.left();
     return true;
   }
 
@@ -174,7 +174,7 @@ function makeMoveFunctions() {
 
     state.currentPiece.coords = newCoords;
     state.currentPiece.pivotPoint.x++;
-    draw.currentPiece();
+    draw.currentPiece.right();
     return true;
   }
 
@@ -291,7 +291,7 @@ function makeMoveFunctions() {
 
     state.currentPiece.coords = newCoords;
     state.currentPiece.pivotPoint.y++;
-    draw.currentPiece();
+    draw.currentPiece.down();
     return true;
 
   }
@@ -564,12 +564,19 @@ function makeDrawFunctions() {
   var drawFunctions = {};
 
   drawFunctions.currentPiece = currentPiece;
+  drawFunctions.currentPiece.left = currentPiece.left;
+  drawFunctions.currentPiece.right = currentPiece.right;
+  drawFunctions.currentPiece.top = currentPiece.top;
+
   drawFunctions.nextPiece = nextPiece;
   drawFunctions.fixedPiece = fixedPiece;
   drawFunctions.allFixedPieces = allFixedPieces;
+
   drawFunctions.clearedLinesNumber = clearedLinesNumber;
+
   drawFunctions.score = score;
   drawFunctions.level = level;
+
   drawFunctions.startMenu = startMenu;
   drawFunctions.gameOverMenu = gameOverMenu;
   drawFunctions.pauseMenu = pauseMenu;
@@ -582,6 +589,41 @@ function makeDrawFunctions() {
 
     clearPiecesBySpecialClass(state.currentPiece.specialClass);
     drawPiece(state.currentPiece);
+
+    currentPiece.left = left;
+    currentPiece.right = right;
+    currentPiece.down = down;
+
+
+    function left() {
+      var currentPieceCubes = document.getElementsByClassName('current');
+
+      for (var i = 0; i < currentPieceCubes.length; i++) {
+        var currentLeft = parseInt(currentPieceCubes[i].style.left);
+        currentLeft--;
+        currentPieceCubes[i].style.left = currentLeft + 'em';
+      }
+    }
+
+    function right() {
+      var currentPieceCubes = document.getElementsByClassName('current');
+
+      for (var i = 0; i < currentPieceCubes.length; i++) {
+        var currentLeft = parseInt(currentPieceCubes[i].style.left);
+        currentLeft++;
+        currentPieceCubes[i].style.left = currentLeft + 'em';
+      }
+    }
+
+    function down() {
+      var currentPieceCubes = document.getElementsByClassName('current');
+
+      for (var i = 0; i < currentPieceCubes.length; i++) {
+        var currentTop = parseInt(currentPieceCubes[i].style.top);
+        currentTop++;
+        currentPieceCubes[i].style.top = currentTop + 'em';
+      }
+    }
   }
 
 
